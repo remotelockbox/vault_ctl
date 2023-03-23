@@ -35,3 +35,32 @@ These are the supported commands:
   --silent         require manual unlocking by pressing the physical button
   --clear          clear any ongoing session
 ```
+
+## Randomizer
+
+The `random_lock.py` program will randomize the time added.
+
+For example, run `./random_lock.py 10` to add up to 10 minutes.
+
+Choose from an evenly random chance between 1 and the maximum minutes or
+select a different randomization style:
+
+middle - will tend more towards times in the middle between 1 minute and the max.
+But be careful, it has a small chance of being closer to the maximum or minimum!
+
+high - the odds of getting a time near the maximum are high and the odds of a lower
+time drop off. This will usually pick times closer to the maximum.
+
+```
+usage: random_lock.py [-h] [--style {uniform,middle,high}] N
+
+Set a lock time on the pivault up to the maximum number of minutes given
+
+positional arguments:
+  N                     maximum minutes to add to the lock time. If not already locked, creates a new sessions
+
+options:
+  -h, --help            show this help message and exit
+  --style {uniform,middle,high}
+                        choose a random number generator
+```

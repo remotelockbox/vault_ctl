@@ -138,7 +138,7 @@ def print_status():
 
         locked_until = json['lockedUntil']
         if locked_until:
-            if not str.isalpha(locked_until[:-1]):
+            if not str.isalpha(locked_until[-1]):
                 locked_until += 'Z'
             print(f"lockedUntil: {dt.fromisoformat(locked_until).astimezone()}")
     except Exception as e:
