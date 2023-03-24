@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import argparse
-import datetime
 import random
 import vault_ctl
 
@@ -21,20 +20,26 @@ def main():
         if args.max_minutes == 0:
             print(f"no time added")
             return
-        minutes = args.max_minutes
-
-        if args.style == 'uniform':
-            minutes = random.randint(1, minutes)
-        if args.style == 'middle':
-            minutes = int(gauss(minutes))
-        if args.style == 'high':
-            minutes = int(random.triangular(1, minutes, minutes))
-
-        dt = datetime.datetime.utcnow() + datetime.timedelta(minutes=minutes)
-        print(f"adding {minutes} minutes")
-        vault_ctl.set_unlock_time(dt)
+        res = lock_max(args.max_minutes, args.style)
+        vault_ctl.print_response(res)
     else:
         parser.print_help()
+
+
+def lock_max(max_minutes, style):
+    minutes = calculate_minutes(max_minutes, style)
+    dt = vault_ctl.add_minutes_to_now(minutes)
+    print(f"adding {minutes} minutes")
+    return vault_ctl.set_unlock_time(dt)
+
+
+def calculate_minutes(max_minutes, style) -> int:
+    if style == 'uniform':
+        return random.randint(1, max_minutes)
+    elif style == 'middle':
+        return int(gauss(max_minutes))
+    elif style == 'high':
+        return int(random.triangular(1, max_minutes, max_minutes))
 
 
 def gauss(maximum: int):

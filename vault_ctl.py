@@ -53,11 +53,17 @@ def main():
         print_status()
     elif args.unlock:
         print("unlocking")
-        unlock(args.silent)
+        res = unlock(args.silent)
+        print_response(res)
     elif args.add_minutes is not None:
-        dt = datetime.datetime.utcnow() + datetime.timedelta(minutes=args.add_minutes)
+        dt = add_minutes_to_now(args)
         print(f"adding {args.add_minutes} minutes")
-        set_unlock_time(dt)
+        res = set_unlock_time(dt)
+        print_response(res)
+    elif args.clear:
+        print("clearing session")
+        res = clear()
+        print_response(res)
     else:
         parser.print_help()
 
@@ -69,9 +75,8 @@ def set_unlock_time(dt: datetime):
         "UseLocal": "False"
     }
 
-    res = requests.post("https://do.pishock.com/pivaultapi/setunlocktime", data=json.dumps(api_data),
-                        auth=HTTPBasicAuth(user_name, user_key), headers=api_headers)
-    print_response(res)
+    return requests.post("https://do.pishock.com/pivaultapi/setunlocktime", data=json.dumps(api_data),
+                         auth=HTTPBasicAuth(user_name, user_key), headers=api_headers)
 
 
 def unlock(manual: bool = True):
@@ -87,9 +92,8 @@ def unlock(manual: bool = True):
         "IgnoreTimer": "False"
     }
 
-    res = requests.post("https://do.pishock.com/pivaultapi/unlock", data=json.dumps(api_data),
-                        auth=HTTPBasicAuth(user_name, user_key), headers=api_headers)
-    print_response(res)
+    return requests.post("https://do.pishock.com/pivaultapi/unlock", data=json.dumps(api_data),
+                         auth=HTTPBasicAuth(user_name, user_key), headers=api_headers)
 
 
 def unlock_delayed(delay_secs: int = None):
@@ -101,9 +105,8 @@ def unlock_delayed(delay_secs: int = None):
         "IgnoreTimer": "False"
     }
 
-    res = requests.post("https://do.pishock.com/pivaultapi/unlock", data=json.dumps(api_data),
-                        auth=HTTPBasicAuth(user_name, user_key), headers=api_headers)
-    print_response(res)
+    return requests.post("https://do.pishock.com/pivaultapi/unlock", data=json.dumps(api_data),
+                         auth=HTTPBasicAuth(user_name, user_key), headers=api_headers)
 
 
 def clear():
@@ -111,9 +114,15 @@ def clear():
         "LockboxApiKey": box_key,
     }
 
-    res = requests.post("https://do.pishock.com/pivaultapi/clear", data=json.dumps(api_data),
-                        auth=HTTPBasicAuth(user_name, user_key), headers=api_headers)
-    print_response(res)
+    return requests.post("https://do.pishock.com/pivaultapi/clear", data=json.dumps(api_data),
+                         auth=HTTPBasicAuth(user_name, user_key), headers=api_headers)
+
+
+# Utility Functions
+
+
+def add_minutes_to_now(minutes):
+    return datetime.datetime.utcnow() + datetime.timedelta(minutes=minutes)
 
 
 def print_status():
