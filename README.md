@@ -23,7 +23,7 @@ Set `box_key` to device key.
 
 ## Usage
 
-Run `./vault_ctl.py` or `python3 vaul_ctl.py` to run the program.
+Run `./vault_ctl.py` or `python3 vault_ctl.py` to run the program.
 
 These are the supported commands:
 
@@ -53,11 +53,17 @@ For example, run `./random_lock.py 10` to add up to 10 minutes.
 Choose from an evenly random chance between 1 and the maximum minutes or
 select a different randomization style:
 
+high - the odds of getting a time near the maximum are high and the odds of a lower
+time drop off. This will usually pick times closer to the maximum.
+
 middle - will tend more towards times in the middle between 1 minute and the max.
 But be careful, it has a small chance of being closer to the maximum or minimum!
 
-high - the odds of getting a time near the maximum are high and the odds of a lower
-time drop off. This will usually pick times closer to the maximum.
+low - the odds of getting a time near the minimum are greater. This is the
+opposite of the "high" option.
+
+moody - Causes one of the other randomization options to be chosen depending
+on your computer's mood.
 
 ```
 usage: random_lock.py [-h] [--style {uniform,middle,high}] N
