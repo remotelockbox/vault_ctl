@@ -36,6 +36,14 @@ These are the supported commands:
   --clear          clear any ongoing session
 ```
 
+## Experimental Graphical UI
+
+Install python tk support
+- `brew install python-tk` on Mac
+- `sudo apt install python3-tk` on Debian or Ubuntu
+
+Run `./ui.py` or `python3 ui.py` to run the program.
+
 ## Randomizer
 
 The `random_lock.py` program will randomize the time added.
