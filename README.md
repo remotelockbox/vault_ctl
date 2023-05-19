@@ -6,6 +6,8 @@ This project is not affiliated with PiShock or PiVault.
 
 ## Setup
 
+### API Keys
+
 You will need your account API key and a specific device API key to allow this
 program to control a vault (either yours or someone else's).
 
@@ -20,6 +22,13 @@ They can do this by clicking the API button and creating a key.
 The API link may not show up if the user is already in a session.
 
 Set `box_key` to device key.
+
+### Installation Requirements
+
+This program requires `python3`.
+
+Before running, install the dependencies with `pip3 install -r requirements.txt`.
+
 
 ## Usage
 
@@ -66,7 +75,7 @@ moody - Causes one of the other randomization options to be chosen depending
 on your computer's mood.
 
 ```
-usage: random_lock.py [-h] [--style {uniform,middle,high}] N
+usage: random_lock.py [-h] [--style {uniform,moody,low,middle,high}] N
 
 Set a lock time on the pivault up to the maximum number of minutes given
 
@@ -75,6 +84,6 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  --style {uniform,middle,high}
+  --style {uniform,moody,low,middle,high}
                         choose a random number generator
 ```
