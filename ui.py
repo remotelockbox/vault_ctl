@@ -51,7 +51,7 @@ def main():
     minute_textbox.insert(0, "5")
     minute_textbox.focus()
 
-    minute_textbox.bind("<Return>", lambda event: add_minutes(int(minute_textbox.get())))
+    minute_textbox.bind("<Return>", lambda event: add_minutes(optional_int(minute_textbox.get())))
     # put hours and minutes next to each other horizontally
     hour_label.pack(side=tk.LEFT)
     hour_textbox.pack(side=tk.LEFT)
@@ -76,8 +76,15 @@ def main():
     root.mainloop()
 
 
+def optional_int(s):
+    if s is None or s == '':
+        return 0
+    else:
+        return int(s)
+
+
 def total_time(hour_textbox, minute_textbox):
-    return int(hour_textbox.get()) * 60 + int(minute_textbox.get())
+    return optional_int(hour_textbox.get()) * 60 + optional_int(minute_textbox.get())
 
 
 def unlock():
